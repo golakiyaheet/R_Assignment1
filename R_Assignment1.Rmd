@@ -1,0 +1,108 @@
+## Loading Dataset
+library("readxl")
+dataset <- read_excel("C:/Users/golak/Downloads/Movie Data.xlsx")
+View(dataset)
+sink("output3.txt", append=T)
+
+## Print the structure of your dataset
+str(dataset)
+
+## List the variables in your dataset 
+cat("Variables in the dataset:\n")
+cat(names(dataset), "\n\n")
+
+## Print the top 15 rows of your dataset 
+cat("Top 15 rows of the dataset:\n")
+head(dataset, 15)
+cat("\n")
+
+## Write a user-defined function using any of the variables from the data set.
+my_function <- function(dataset, Rating)
+{
+  variable <- dataset[[Rating]]
+  average <- mean(variable)
+  return(average)
+}
+my_function
+result <- my_function(dataset, "Rating")
+cat("Result of the function:", result, "\n\n")
+
+## Use data manipulation techniques and filter rows based on any logical criteria that exist in your dataset
+library(dplyr)
+filtered_data <- filter(dataset, Rating > 5)
+cat("Filtered dataset:\n")
+print(filtered_data)
+cat("\n")
+
+## Identify and remove duplicated data in your dataset
+duplicated_rows <- duplicated(dataset)
+cat("Duplicated rows:\n")
+print(duplicated_rows)
+cat("\n")
+
+## Reorder multiple rows in descending order 
+ordered_dataset <- arrange(dataset, desc(Year), desc(Rating))
+cat("Ordered dataset:\n")
+print(ordered_dataset)
+cat("\n")
+
+## Rename some of the column names in your dataset
+colnames(dataset)
+names(dataset)[2] <- "release_year"
+names(dataset)[8] <- "movie_rating"
+cat("Renamed column names:\n")
+colnames(dataset)
+cat("\n")
+
+## Add new variables in your data frame by using a mathematical function
+dataset$New_Rating <- dataset$movie_rating + 1
+cat("Updated dataset with new variable:\n")
+colnames(dataset)
+cat("\n")
+
+## Create a training set using random number generator engine. 
+training_indices <- sample(nrow(dataset), size = round(0.7 * nrow(dataset)))
+training_set <- dataset[training_indices, ]
+cat("Training set:\n")
+print(training_set)
+cat("\n")
+
+## Print the summary statistics of your dataset 
+cat("Summary statistics of the dataset:\n")
+summary(dataset)
+cat("\n")
+
+## Use any of the numerical variables from the dataset and perform statistical functions
+mean_rating <- mean(dataset$movie_rating)
+cat("Mean rating:", mean_rating, "\n")
+
+median_rating <- median(dataset$movie_rating)
+cat("Median rating:", median_rating, "\n")
+
+calculate_mode <- function(x) {
+  unique_values <- unique(x)
+  counts <- tabulate(match(x, unique_values))
+  mode <- unique_values[which.max(counts)]
+  return(mode)
+}
+variable_mode <- calculate_mode(dataset$movie_rating)
+cat("Mode of movie rating:", variable_mode, "\n")
+
+variable_range <- range(dataset$movie_rating)
+cat("Range of movie rating:", variable_range, "\n\n")
+
+## Plot a scatter plot for any 2 variables in your dataset
+x <- dataset$movie_rating
+y <- dataset$release_year
+plot(x, y)
+cat("Scatter plot saved as 'scatter_plot.png'\n")
+dev.copy(png, "scatter_plot.png")
+dev.off()
+cat("\n")
+
+## Plot a bar plot for any 2 variables in your dataset 
+variable <- dataset$movie_rating
+barplot(variable)
+cat("Bar plot saved as 'bar_plot.png'\n
+
+sink()
